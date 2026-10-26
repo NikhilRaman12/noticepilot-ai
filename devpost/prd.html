@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NoticePilot AI — Product Requirements</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --navy: #183153;
+      --teal: #247c78;
+      --paper: #f7f8fa;
+      --white: #fff;
+      --line: #e1e6ed;
+      --slate: #586579;
+      --amber: #9a5b00;
+      --teal-soft: #e8f4f2;
+      --amber-soft: #fff3dc;
+      --shadow: 0 8px 24px #1831530c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--navy);
+      font: 16px/1.65 Inter, "Segoe UI", system-ui, sans-serif;
+    }
+    main { width: min(960px, calc(100% - 32px)); margin: 42px auto; }
+    header { padding: 10px 2px 22px; }
+    .eyebrow {
+      color: var(--teal);
+      font-size: .78rem;
+      font-weight: 750;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    h1 { margin: 8px 0 4px; font-size: clamp(2.2rem, 7vw, 3.8rem); line-height: 1.12; }
+    h2 { margin: 0 0 12px; font-size: 1.28rem; }
+    h3 { margin: 18px 0 8px; font-size: 1.02rem; }
+    p { margin: 8px 0 14px; }
+    .lede { max-width: 720px; color: var(--slate); font-size: 1.12rem; }
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border: 1px solid #e2c77d;
+      border-radius: 99px;
+      background: var(--amber-soft);
+      color: var(--amber);
+      font-size: .82rem;
+      font-weight: 750;
+    }
+    .panel, details {
+      margin: 16px 0;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+    .panel { padding: 22px; }
+    .journey { overflow-x: auto; }
+    svg { display: block; width: 100%; min-width: 650px; height: auto; }
+    .node { fill: var(--paper); stroke: var(--line); stroke-width: 1.5; }
+    .node-accent { fill: var(--teal-soft); stroke: #a8d1cc; }
+    .node-title { fill: var(--navy); font: 700 15px Inter, "Segoe UI", sans-serif; }
+    .node-copy { fill: var(--slate); font: 12px Inter, "Segoe UI", sans-serif; }
+    .link { fill: none; stroke: var(--teal); stroke-width: 2; }
+    .key {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 12px;
+    }
+    .key span { padding: 3px 9px; border-radius: 99px; font-size: .82rem; font-weight: 700; }
+    .supported { background: var(--teal-soft); color: #155f5b; }
+    .verify { background: var(--amber-soft); color: var(--amber); }
+    .missing { background: #edf0f3; color: var(--slate); }
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+    .step {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--white);
+    }
+    .step b { display: block; margin-bottom: 5px; }
+    details { overflow: hidden; }
+    summary { padding: 16px 20px; cursor: pointer; font-weight: 750; }
+    details > div { padding: 0 20px 18px; }
+    ul { margin: 8px 0; padding-left: 22px; }
+    li + li { margin-top: 6px; }
+    .callout { border-left: 4px solid var(--teal); padding-left: 14px; }
+    code { color: var(--navy); }
+    footer { padding: 15px 2px; color: var(--slate); font-size: .9rem; }
+    @media (max-width: 600px) {
+      main { width: calc(100% - 20px); margin: 26px auto; }
+      .panel { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="eyebrow">Build With AI: Basics · Product requirements</div>
+      <h1>NoticePilot AI</h1>
+      <p class="lede">Understand the notice. Know your next step. A single-screen, evidence-first experience for a citizen acting on a confusing public-service notice.</p>
+      <span class="badge">Draft · for learner review</span>
+    </header>
+
+    <section class="panel">
+      <h2>From notice to verified next step</h2>
+      <div class="journey">
+        <svg viewBox="0 0 900 190" role="img" aria-labelledby="journey-title journey-desc">
+          <title id="journey-title">NoticePilot AI user journey</title>
+          <desc id="journey-desc">A citizen enters or loads a fictional notice, analyzes it, reviews action-first results, and opens evidence to verify claims and unresolved issues.</desc>
+          <defs>
+            <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#247c78"></path>
+            </marker>
+          </defs>
+          <rect class="node" x="12" y="42" width="170" height="105" rx="14"></rect>
+          <text class="node-title" x="30" y="74">1 · Start</text>
+          <text class="node-copy" x="30" y="98">Paste text or load</text>
+          <text class="node-copy" x="30" y="117">fictional sample</text>
+          <path class="link" d="M186 94 H208" marker-end="url(#arrow)"></path>
+          <rect class="node" x="218" y="42" width="170" height="105" rx="14"></rect>
+          <text class="node-title" x="236" y="74">2 · Analyze</text>
+          <text class="node-copy" x="236" y="98">Loading and</text>
+          <text class="node-copy" x="236" y="117">recoverable errors</text>
+          <path class="link" d="M392 94 H414" marker-end="url(#arrow)"></path>
+          <rect class="node-accent" x="424" y="42" width="205" height="105" rx="14"></rect>
+          <text class="node-title" x="442" y="74">3 · Understand &amp; act</text>
+          <text class="node-copy" x="442" y="98">Summary, actions,</text>
+          <text class="node-copy" x="442" y="117">dates, documents</text>
+          <path class="link" d="M633 94 H655" marker-end="url(#arrow)"></path>
+          <rect class="node" x="665" y="42" width="220" height="105" rx="14"></rect>
+          <text class="node-title" x="683" y="74">4 · Verify</text>
+          <text class="node-copy" x="683" y="98">Open exact source,</text>
+          <text class="node-copy" x="683" y="117">status, and gaps</text>
+        </svg>
+      </div>
+      <div class="key" aria-label="Evidence statuses">
+        <span class="supported">Supported by notice</span>
+        <span class="verify">Needs verification</span>
+        <span class="missing">Not found in notice</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>One screen, ordered for action</h2>
+      <div class="steps">
+        <div class="step"><b>Input</b>Product identity, trust promise, notice text area, sample action, and Analyze notice.</div>
+        <div class="step"><b>Summary</b>“What this notice means” with a status overview; no invented dates, counts, or requirements.</div>
+        <div class="step"><b>Next steps</b>Action cards ordered by urgency only when the source supports the ordering.</div>
+        <div class="step"><b>Dates &amp; documents</b>Original wording, location where available, and source-linked explicit requirements.</div>
+        <div class="step"><b>Needs your attention</b>Visible ambiguity, missing information, conflicts, and questions to confirm.</div>
+        <div class="step"><b>Evidence</b>Open an important result to see its exact passage, available location, and verification status.</div>
+      </div>
+    </section>
+
+    <details open>
+      <summary>Behavior and measurable acceptance criteria</summary>
+      <div>
+        <h3>Input and analysis</h3>
+        <ul>
+          <li>Blank or whitespace-only input disables Analyze notice and displays “Paste a notice or try our sample to get started.” The sample action remains available.</li>
+          <li>Loading the sample fills the notice input; the same Analyze action starts the sample workflow.</li>
+          <li>While analysis runs, a restrained loading state is visible and a second submission cannot start. When processing ends, the action is restored.</li>
+          <li>For invalid or insufficient input, the original text stays present, the problem is explained in plain language, and edit/sample/retry paths remain available.</li>
+        </ul>
+        <h3>Results and evidence</h3>
+        <ul>
+          <li>Successful analysis places the explanation and results on the same screen and keeps the original notice available.</li>
+          <li>Each important result exposes “View evidence” with the exact source excerpt and a page or section reference where available.</li>
+          <li>Every result uses an explicit supported, needs-verification, or not-found status; color is not the sole status indicator.</li>
+          <li>Each checklist item links to evidence or is labelled as a suggestion. An unmentioned document is never shown as mandatory.</li>
+          <li>Dates retain source wording; a date is not presented as a submission deadline without contextual evidence. No deadline is inferred from today's date.</li>
+          <li>Ambiguous and missing details appear in Needs your attention, not as settled facts. A conflict, if included, shows both source passages with a warning.</li>
+          <li>A first-time user can complete the bundled-sample journey and inspect evidence in under one minute during the demo.</li>
+        </ul>
+        <h3>Failure recovery</h3>
+        <ul>
+          <li>On analysis failure, the full input remains and the user sees “We couldn't analyze this notice. Your text is still here—please try again.” with Retry and Edit actions.</li>
+          <li>A failed attempt does not replace prior results with unsupported output; any prior results are identified as belonging to the previous successful analysis.</li>
+          <li>After editing and retrying, the user does not need to restart the workflow or re-enter the notice.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>Important states and boundaries</summary>
+      <div>
+        <ul>
+          <li><strong>Empty:</strong> Helpful inline prompt; no alarming error or analysis request.</li>
+          <li><strong>Ready:</strong> Sample or pasted text is present and can be analyzed.</li>
+          <li><strong>Analyzing:</strong> Restrained progress, duplicate submission prevented.</li>
+          <li><strong>Insufficient input:</strong> Preserve text, explain what source information is needed, offer edit or sample.</li>
+          <li><strong>Failure:</strong> Preserve text, show retry and edit; never create success-shaped unsupported results.</li>
+          <li><strong>Partial analysis:</strong> Show only source-supported results; mark unresolved information explicitly.</li>
+          <li><strong>No account, persistent storage, API key, or authoritative advice is required for this proof of concept.</strong></li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>Look, decisions, and what is deferred</summary>
+      <div>
+        <p class="callout">Evidence-first clarity: deep navy, muted teal, warm off-white, readable type, generous spacing, responsive layout, calm civic-tech tone. No chatbot look, robot imagery, glowing gradients, excessive glass, or decorative AI effects.</p>
+        <ul>
+          <li><strong>Now:</strong> One fictional text-first notice workflow, source-linked actions, dates and documents, uncertainty states, and resilient retry behavior.</li>
+          <li><strong>Deferred:</strong> PDF upload and highlighting, broad real-world notice coverage, integrations, accounts, persistence, and external API dependence.</li>
+          <li><strong>Stretch only:</strong> A deliberately conflicting-date sample, if it fits after the core experience works reliably.</li>
+          <li><strong>Open for spec:</strong> The exact insufficient-text validation boundary and source-location representation for pasted text. Neither may weaken the user-facing evidence and recovery behavior.</li>
+        </ul>
+      </div>
+    </details>
+
+    <footer>Canonical product definition: <code>devpost/prd.md</code>. This companion uses inline SVG and CSS; it works offline and requires no framework or build step.</footer>
+  </main>
+</body>
+</html>

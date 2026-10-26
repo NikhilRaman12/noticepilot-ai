@@ -1,0 +1,12 @@
+/devpost/learner-profile.md
+/devpost/checklist.md
+/.agents/
+/.claude/
+/agent/
+/skills-lock.json
+.env
+.env.*
+!.env.example
+node_modules/
+dist/
+*.tsbuildinfo

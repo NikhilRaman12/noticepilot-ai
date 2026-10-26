@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NoticePilot AI — Scope</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #172b3a;
+      --muted: #536778;
+      --paper: #f4f7f8;
+      --card: #fff;
+      --line: #d6e0e5;
+      --accent: #087e78;
+      --accent-soft: #e5f4f1;
+      --warning: #875d13;
+      --warning-soft: #fff4da;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 16px/1.6 "Segoe UI", system-ui, sans-serif;
+    }
+    main { width: min(900px, calc(100% - 32px)); margin: 48px auto; }
+    header { margin-bottom: 28px; }
+    .eyebrow {
+      color: var(--accent);
+      font-size: .78rem;
+      font-weight: 750;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    h1 { margin: 8px 0; font-size: clamp(2.2rem, 7vw, 4rem); line-height: 1.05; }
+    h2 { margin: 0 0 10px; font-size: 1.2rem; }
+    p { margin: 8px 0 14px; }
+    .lede { max-width: 680px; color: var(--muted); font-size: 1.15rem; }
+    .status {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 4px 10px;
+      border: 1px solid #e4c981;
+      border-radius: 99px;
+      background: var(--warning-soft);
+      color: var(--warning);
+      font-size: .82rem;
+      font-weight: 700;
+    }
+    section, details {
+      margin: 16px 0;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--card);
+      box-shadow: 0 5px 18px #17384b0a;
+    }
+    .diagram { overflow-x: auto; }
+    svg { display: block; width: 100%; min-width: 590px; height: auto; }
+    .node { fill: var(--accent-soft); stroke: #9acdc5; stroke-width: 1.5; }
+    .node-final { fill: #172b3a; stroke: #172b3a; }
+    .node-title { fill: var(--ink); font: 700 16px "Segoe UI", sans-serif; }
+    .node-copy { fill: var(--muted); font: 13px "Segoe UI", sans-serif; }
+    .final-title, .final-copy { fill: white; }
+    .connector { fill: none; stroke: var(--accent); stroke-width: 2; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+    .grid section { margin: 0; box-shadow: none; }
+    .tag {
+      display: inline-block;
+      margin: 0 5px 5px 0;
+      padding: 2px 8px;
+      border-radius: 99px;
+      background: var(--accent-soft);
+      color: #075d59;
+      font-size: .78rem;
+      font-weight: 700;
+    }
+    details { padding: 0; }
+    summary { padding: 16px 20px; cursor: pointer; font-weight: 750; }
+    details > div { padding: 0 20px 16px; }
+    ul { margin: 8px 0 0; padding-left: 22px; }
+    li + li { margin-top: 6px; }
+    footer { padding: 12px 4px; color: var(--muted); font-size: .88rem; }
+    @media (max-width: 600px) {
+      main { width: min(100% - 20px, 900px); margin: 28px auto; }
+      section { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="eyebrow">Build With AI: Basics · Scope</div>
+      <h1>NoticePilot AI</h1>
+      <p class="lede">Turn one confusing public-service notice into next steps a citizen can verify against the source.</p>
+      <span class="status">Draft · for learner review</span>
+    </header>
+
+    <section>
+      <h2>The distinctive idea</h2>
+      <p>Every important result stays inspectable: people can see the notice passage behind a deadline, requirement, or action, while ambiguous, missing, or conflicting information is surfaced rather than guessed or silently resolved.</p>
+    </section>
+
+    <section class="diagram">
+      <h2>One user, one verifiable loop</h2>
+      <svg viewBox="0 0 840 220" role="img" aria-labelledby="diagram-title diagram-desc">
+        <title id="diagram-title">NoticePilot AI core workflow</title>
+        <desc id="diagram-desc">A citizen reviews a fictional notice, receives plain-language actions, and checks each result against source evidence and visible uncertainty.</desc>
+        <defs>
+          <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#087e78"></path>
+          </marker>
+        </defs>
+        <rect class="node" x="12" y="54" width="185" height="112" rx="15"></rect>
+        <text class="node-title" x="30" y="88">Citizen</text>
+        <text class="node-copy" x="30" y="113">Needs to act on a</text>
+        <text class="node-copy" x="30" y="133">confusing notice</text>
+        <path class="connector" d="M201 110 H235" marker-end="url(#arrow)"></path>
+        <rect class="node" x="244" y="54" width="185" height="112" rx="15"></rect>
+        <text class="node-title" x="262" y="88">Fictional notice</text>
+        <text class="node-copy" x="262" y="113">Bundled sample;</text>
+        <text class="node-copy" x="262" y="133">text-first workflow</text>
+        <path class="connector" d="M433 110 H467" marker-end="url(#arrow)"></path>
+        <rect class="node" x="476" y="54" width="185" height="112" rx="15"></rect>
+        <text class="node-title" x="494" y="88">Understand &amp; act</text>
+        <text class="node-copy" x="494" y="113">Plain-language actions</text>
+        <text class="node-copy" x="494" y="133">and extracted deadline</text>
+        <path class="connector" d="M665 110 H699" marker-end="url(#arrow)"></path>
+        <rect class="node-final" x="708" y="40" width="120" height="140" rx="15"></rect>
+        <text class="node-title final-title" x="723" y="78">Verify</text>
+        <text class="node-copy final-copy" x="723" y="103">Evidence, gaps,</text>
+        <text class="node-copy final-copy" x="723" y="123">ambiguity, and</text>
+        <text class="node-copy final-copy" x="723" y="143">conflicts visible</text>
+      </svg>
+    </section>
+
+    <section class="grid">
+      <section>
+        <h2>Who it's for</h2>
+        <p>A nontechnical citizen whose public-service notice requests additional documents before a deadline, and who needs to know what to do without repeatedly rereading it.</p>
+      </section>
+      <section>
+        <h2>What makes it matter</h2>
+        <p>It applies practical AI to make complex information easier to understand and act on, while practicing a disciplined plan-first workflow.</p>
+      </section>
+      <section>
+        <h2>Feel and tone</h2>
+        <p>Simple, polished, approachable, clear, and calm. Prioritize inspectable evidence over confident-sounding answers.</p>
+      </section>
+    </section>
+
+    <section>
+      <h2>What “working” looks like</h2>
+      <p>In a short on-screen demo, a first-time user goes from a bundled fictional notice to its explanation, deadline, required actions, and verifiable checklist in under a minute. Selecting an important result reveals its exact supporting passage and location where available. One ambiguous instruction and one missing detail are flagged, not guessed. If it fits after the core workflow is reliable, conflicting dates are shown together with a warning.</p>
+      <p><strong>The “oh, that’s cool” moment:</strong> the user discovers an answer is evidence-linked—or that the notice does not support one.</p>
+      <span class="tag">Fictional sample</span>
+      <span class="tag">No external API key required</span>
+      <span class="tag">Clear limitations</span>
+    </section>
+
+    <details open>
+      <summary>Now · the proof of concept</summary>
+      <div>
+        <ul>
+          <li>One complete, text-first workflow using a clearly fictional public-service notice; pasted text is included only if it does not delay the bundled-sample path.</li>
+          <li>Plain-language purpose and explanation, supported deadline and document requirements, actionable next steps, and source-linked checklist items.</li>
+          <li>Exact excerpts, page or section references where available, and supported, ambiguous, and not-found states. Suggestions are distinguished from notice requirements.</li>
+          <li>Explicit missing-information warnings; a deliberate conflicting-date example if it can be handled reliably within the remaining time.</li>
+          <li>A polished interface for nontechnical users, useful error handling, and transparent limitations. The main demo requires no external AI API key.</li>
+        </ul>
+      </div>
+    </details>
+    <details>
+      <summary>Later · after the core workflow</summary>
+      <div>
+        <ul>
+          <li>PDF upload and advanced document processing.</li>
+          <li>Broader notice types, real-world jurisdiction coverage, and issuing-authority integrations.</li>
+          <li>Capabilities not needed to prove the notice-to-verifiable-actions workflow.</li>
+        </ul>
+      </div>
+    </details>
+    <details>
+      <summary>Cut · not part of this proof of concept</summary>
+      <div>
+        <ul>
+          <li>Production-ready legal, government, or eligibility advice; this proof of concept is not authoritative.</li>
+          <li>Inventing requirements, resolving ambiguity or conflicts without evidence, or presenting unsupported interpretations as verified fact.</li>
+          <li>A general-purpose document platform or broad agent workflow that would make the core demo less reliable within the hackathon.</li>
+        </ul>
+      </div>
+    </details>
+
+    <footer>Canonical plan: <code>devpost/scope.md</code>. This visual companion works offline; the inline diagram has no external dependencies.</footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NoticePilot AI — Technical Spec</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --navy: #183153;
+      --teal: #247c78;
+      --paper: #f7f8fa;
+      --white: #fff;
+      --line: #e1e6ed;
+      --slate: #586579;
+      --amber: #9a5b00;
+      --teal-soft: #e8f4f2;
+      --amber-soft: #fff3dc;
+      --shadow: 0 8px 24px #1831530c;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--navy); font: 16px/1.65 Inter, "Segoe UI", system-ui, sans-serif; }
+    main { width: min(980px, calc(100% - 32px)); margin: 42px auto; }
+    h1 { margin: 8px 0; font-size: clamp(2.2rem, 7vw, 3.8rem); line-height: 1.1; }
+    h2 { margin: 0 0 12px; font-size: 1.25rem; }
+    h3 { margin: 20px 0 8px; font-size: 1rem; }
+    p { margin: 8px 0 14px; }
+    .eyebrow { color: var(--teal); font-size: .78rem; font-weight: 750; letter-spacing: .12em; text-transform: uppercase; }
+    .lede { max-width: 740px; color: var(--slate); font-size: 1.1rem; }
+    .badge { display: inline-block; padding: 3px 10px; border: 1px solid #e2c77d; border-radius: 99px; background: var(--amber-soft); color: var(--amber); font-size: .82rem; font-weight: 750; }
+    .panel, details { margin: 16px 0; border: 1px solid var(--line); border-radius: 16px; background: var(--white); box-shadow: var(--shadow); }
+    .panel { padding: 22px; }
+    .diagram { overflow-x: auto; }
+    svg { display: block; width: 100%; min-width: 670px; height: auto; }
+    .node { fill: var(--paper); stroke: var(--line); stroke-width: 1.5; }
+    .source { fill: var(--teal-soft); stroke: #a8d1cc; }
+    .warning { fill: var(--amber-soft); stroke: #e2c77d; }
+    .node-title { fill: var(--navy); font: 700 14px Inter, "Segoe UI", sans-serif; }
+    .node-copy { fill: var(--slate); font: 11px Inter, "Segoe UI", sans-serif; }
+    .link { fill: none; stroke: var(--teal); stroke-width: 2; }
+    .flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+    .flow > div { padding: 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--white); }
+    .flow b { display: block; }
+    .key { display: flex; flex-wrap: wrap; gap: 8px; }
+    .key span { padding: 3px 9px; border-radius: 99px; font-size: .8rem; font-weight: 700; }
+    .supported { background: var(--teal-soft); color: #155f5b; }
+    .verify { background: var(--amber-soft); color: var(--amber); }
+    .missing { background: #edf0f3; color: var(--slate); }
+    details { overflow: hidden; }
+    summary { padding: 16px 20px; cursor: pointer; font-weight: 750; }
+    details > div { padding: 0 20px 18px; }
+    ul { margin: 8px 0; padding-left: 22px; }
+    li + li { margin-top: 6px; }
+    pre { overflow-x: auto; padding: 16px; border-radius: 12px; background: #f1f4f7; color: var(--navy); font: .85rem/1.55 Consolas, monospace; }
+    code { color: var(--navy); }
+    footer { padding: 15px 2px; color: var(--slate); font-size: .9rem; }
+    @media (max-width: 600px) { main { width: calc(100% - 20px); margin: 26px auto; } .panel { padding: 16px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="eyebrow">Build With AI: Basics · Technical specification</div>
+      <h1>NoticePilot AI</h1>
+      <p class="lede">A local browser app: deterministic text rules return source-linked findings, and the interface makes evidence, uncertainty, and next steps inspectable.</p>
+      <span class="badge">Approved · build blueprint</span>
+    </header>
+
+    <section class="panel diagram">
+      <h2>Actual data flow</h2>
+      <svg viewBox="0 0 950 230" role="img" aria-labelledby="data-title data-desc">
+        <title id="data-title">NoticePilot AI data flow</title>
+        <desc id="data-desc">Sample or pasted text stays in browser memory, is read by a deterministic local analyzer, and becomes supported findings, uncertainty/conflicts, or not-found states with evidence.</desc>
+        <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#247c78"></path></marker></defs>
+        <rect class="node" x="10" y="58" width="180" height="110" rx="14"></rect>
+        <text class="node-title" x="27" y="89">Sample / pasted text</text>
+        <text class="node-copy" x="27" y="113">Exact source retained</text>
+        <text class="node-copy" x="27" y="132">in browser memory</text>
+        <path class="link" d="M194 113 H220" marker-end="url(#arrow)"></path>
+        <rect class="node" x="230" y="58" width="180" height="110" rx="14"></rect>
+        <text class="node-title" x="247" y="89">React workspace</text>
+        <text class="node-copy" x="247" y="113">Input, progress,</text>
+        <text class="node-copy" x="247" y="132">results, retry</text>
+        <path class="link" d="M414 113 H440" marker-end="url(#arrow)"></path>
+        <rect class="source" x="450" y="48" width="225" height="130" rx="14"></rect>
+        <text class="node-title" x="467" y="81">TypeScript rules</text>
+        <text class="node-copy" x="467" y="106">Recognize explicit patterns</text>
+        <text class="node-copy" x="467" y="125">Preserve source offsets</text>
+        <text class="node-copy" x="467" y="144">No API / no model</text>
+        <path class="link" d="M679 113 H705" marker-end="url(#arrow)"></path>
+        <rect class="node" x="715" y="20" width="220" height="62" rx="12"></rect>
+        <text class="node-title" x="731" y="45">Supported finding</text>
+        <text class="node-copy" x="731" y="65">Exact excerpt + location</text>
+        <rect class="warning" x="715" y="92" width="220" height="62" rx="12"></rect>
+        <text class="node-title" x="731" y="117">Needs verification</text>
+        <text class="node-copy" x="731" y="137">Ambiguous + both conflict quotes</text>
+        <rect class="node" x="715" y="164" width="220" height="54" rx="12"></rect>
+        <text class="node-title" x="731" y="187">Not found in notice</text>
+        <text class="node-copy" x="731" y="205">No invented citation</text>
+      </svg>
+      <div class="key" aria-label="Evidence states">
+        <span class="supported">Supported by notice</span>
+        <span class="verify">Needs verification</span>
+        <span class="missing">Not found in notice</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>The core journey through the system</h2>
+      <div class="flow">
+        <div><b>1 · Enter</b>Load the labelled fictional sample or paste/edit text.</div>
+        <div><b>2 · Analyze</b>Local rules inspect original text and preserve exact offsets.</div>
+        <div><b>3 · Review</b>Render only supported findings and explicit gaps/conflicts.</div>
+        <div><b>4 · Verify</b>Open a finding to read its exact quoted source; edit and retry as needed.</div>
+      </div>
+    </section>
+
+    <details open>
+      <summary>Components tied to the PRD</summary>
+      <div>
+        <ul>
+          <li><strong>Notice Workspace:</strong> input, sample, validation, progress, results, and retry on one responsive page. Implements <code>prd.md &gt; Screens and Layout</code> and <code>prd.md &gt; Features and Behavior &gt; Notice input and analysis</code>.</li>
+          <li><strong>Fictional Sample Notice:</strong> explicit actions, a contextualized date, ambiguity, and missing detail; conflict sample only after core flow. Implements <code>prd.md &gt; Product Decisions</code>.</li>
+          <li><strong>Deterministic Notice Analyzer:</strong> pure, local rules return findings with evidence from the original text. Implements <code>prd.md &gt; Features and Behavior &gt; Plain-language explanation and action-first results</code>.</li>
+          <li><strong>Evidence and Finding Views:</strong> expandable excerpt, available line/heading, verification state, and paired conflict sources. Implements <code>prd.md &gt; Features and Behavior &gt; Evidence and verification</code>.</li>
+          <li><strong>Validation, Loading, and Recovery:</strong> blank prompt, partial results, duplicate-submit guard, source preservation, retry and stale-result handling. Implements <code>prd.md &gt; States and Boundaries</code>.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary>Data contract and evidence invariant</summary>
+      <div>
+        <p>A finding contains an ID, kind, short explanation, verification status, evidence spans, and optional explicit/suggestion classification. An evidence span stores inclusive start and exclusive end offsets into the exact analyzed input, the exact quote, and a 1-based line or actual heading when available.</p>
+        <p><strong>Invariant:</strong> <code>quote === sourceText.slice(start, end)</code>. Not-found findings have no evidence span. Conflicting findings retain both relevant spans. The current editable text and last successful result are separate, so failed retries never misattribute results.</p>
+        <p>All data lives in browser memory. Refreshing or closing the tab clears the notice and results; no account, database, or saved history.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Testing and run commands</summary>
+      <div>
+        <ul>
+          <li><code>npm install</code> then <code>npm run dev</code>; open the local URL printed by Vite.</li>
+          <li><code>npm test</code> covers rule extraction, exact source slices, supported/ambiguous/conflicting/not-found cases, and UI recovery.</li>
+          <li><code>npm run build</code> checks the TypeScript/Vite production build.</li>
+          <li>Record locally: sample → analyze → inspect exact evidence → show unresolved information. The short video and public GitHub repository are required; deployment is optional.</li>
+          <li>Include the learner-selected open-source license in <code>LICENSE</code> and local install/run/test plus demo-video guidance in <code>README.md</code>.</li>
+        </ul>
+        <p>Official references: <a href="https://vite.dev/guide/">Vite</a>, <a href="https://react.dev/learn">React</a>, <a href="https://www.typescriptlang.org/docs/">TypeScript</a>, <a href="https://vitest.dev/guide/">Vitest</a>, <a href="https://testing-library.com/docs/react-testing-library/intro/">React Testing Library</a>.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Trade-offs and unresolved checks</summary>
+      <div>
+        <ul>
+          <li>Rule-based extraction is reproducible and auditable but deliberately incomplete; unfamiliar phrasing produces partial results, never invented certainty.</li>
+          <li>Plain text supports exact excerpts and line/real-heading anchors, not page numbers or PDF highlighting.</li>
+          <li>No application runtime is installed yet; verify Node/npm compatibility and pin package versions early in the build.</li>
+          <li>Conflict representation and tests are specified; include a conflicting-date sample only after the core demo is reliable.</li>
+        </ul>
+      </div>
+    </details>
+
+    <footer>Canonical technical blueprint: <code>devpost/spec.md</code>. This companion uses inline SVG/CSS, works offline, and has no build step.</footer>
+  </main>
+</body>
+</html>
